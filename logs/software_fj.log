@@ -1,0 +1,223 @@
+2026-11-16 17:35:26,752 | INFO | Cliente registrado: 10203040
+2026-11-16 17:35:26,753 | ERROR | Operación 2 fallida: Registro inválido de cliente
+Traceback (most recent call last):
+  File "/mnt/data/Software_FJ/main.py", line 12, in ejecutar_operacion
+    resultado = funcion()
+  File "/mnt/data/Software_FJ/main.py", line 39, in cliente_invalido
+    return Cliente("Li", "123", "correo-mal", "12")
+  File "/mnt/data/Software_FJ/clientes.py", line 9, in __init__
+    self.nombre = nombre
+    ^^^^^^^^^^^
+  File "/mnt/data/Software_FJ/clientes.py", line 21, in nombre
+    raise DatosInvalidosError("El nombre debe tener al menos 3 caracteres.")
+excepciones.DatosInvalidosError: El nombre debe tener al menos 3 caracteres.
+2026-11-16 17:35:26,755 | ERROR | Operación 3 fallida: Intento de registrar cliente duplicado
+Traceback (most recent call last):
+  File "/mnt/data/Software_FJ/main.py", line 12, in ejecutar_operacion
+    resultado = funcion()
+  File "/mnt/data/Software_FJ/main.py", line 43, in cliente_duplicado
+    sistema.registrar_cliente(c)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "/mnt/data/Software_FJ/gestor.py", line 29, in registrar_cliente
+    raise SoftwareFJError("Ya existe un cliente con ese documento.")
+excepciones.SoftwareFJError: Ya existe un cliente con ese documento.
+2026-11-16 17:35:26,756 | INFO | Servicio registrado: Sala Ejecutiva
+2026-11-16 17:35:26,756 | INFO | Servicio registrado: Proyector
+2026-11-16 17:35:26,756 | INFO | Servicio registrado: Consultoría Python
+2026-11-16 17:35:26,756 | ERROR | Operación 5 fallida: Creación de servicio con tarifa inválida
+Traceback (most recent call last):
+  File "/mnt/data/Software_FJ/main.py", line 12, in ejecutar_operacion
+    resultado = funcion()
+  File "/mnt/data/Software_FJ/main.py", line 52, in servicio_invalido
+    return ReservaSala("Sala pequeña", -100, 10)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/Software_FJ/servicios.py", line 51, in __init__
+    super().__init__(nombre, tarifa_hora, disponible)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/Software_FJ/servicios.py", line 10, in __init__
+    raise DatosInvalidosError("La tarifa debe ser un número mayor que cero.")
+excepciones.DatosInvalidosError: La tarifa debe ser un número mayor que cero.
+2026-11-16 17:35:26,759 | INFO | Reserva creada: 1d83dce7
+2026-11-16 17:35:26,759 | ERROR | Operación 6 fallida: Reserva confirmada y procesada correctamente
+Traceback (most recent call last):
+  File "/mnt/data/Software_FJ/reservas.py", line 40, in procesar
+    self.costo = self.servicio.calcular_costo(
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.horas, impuesto, descuento, **self.parametros
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+TypeError: Servicio.calcular_costo() got an unexpected keyword argument 'personas'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/mnt/data/Software_FJ/main.py", line 12, in ejecutar_operacion
+    resultado = funcion()
+  File "/mnt/data/Software_FJ/main.py", line 57, in reserva_exitosa
+    costo = r.procesar(descuento=0.10)
+  File "/mnt/data/Software_FJ/reservas.py", line 44, in procesar
+    raise ReservaError("No fue posible calcular el costo de la reserva.") from error
+excepciones.ReservaError: No fue posible calcular el costo de la reserva.
+2026-11-16 17:35:26,760 | ERROR | Operación 7 fallida: Reserva de sala sin parámetro obligatorio
+Traceback (most recent call last):
+  File "/mnt/data/Software_FJ/main.py", line 12, in ejecutar_operacion
+    resultado = funcion()
+  File "/mnt/data/Software_FJ/main.py", line 61, in reserva_sin_parametros
+    return sistema.crear_reserva(clientes_creados["laura"], sala, 2)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/Software_FJ/gestor.py", line 40, in crear_reserva
+    reserva = Reserva(cliente, servicio, horas, **parametros)
+  File "/mnt/data/Software_FJ/reservas.py", line 16, in __init__
+    servicio.validar_parametros(**parametros)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/mnt/data/Software_FJ/servicios.py", line 59, in validar_parametros
+    raise DatosInvalidosError("Falta indicar la cantidad de personas.")
+excepciones.DatosInvalidosError: Falta indicar la cantidad de personas.
+2026-11-16 17:35:26,761 | ERROR | Operación 8 fallida: Alquiler de más equipos de los disponibles
+Traceback (most recent call last):
+  File "/mnt/data/Software_FJ/main.py", line 12, in ejecutar_operacion
+    resultado = funcion()
+  File "/mnt/data/Software_FJ/main.py", line 64, in equipo_excede_unidades
+    return sistema.crear_reserva(clientes_creados["laura"], equipo, 3, cantidad=9)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/Software_FJ/gestor.py", line 40, in crear_reserva
+    reserva = Reserva(cliente, servicio, horas, **parametros)
+  File "/mnt/data/Software_FJ/reservas.py", line 16, in __init__
+    servicio.validar_parametros(**parametros)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/mnt/data/Software_FJ/servicios.py", line 79, in validar_parametros
+    raise DatosInvalidosError(f"Solo hay {self.unidades} unidades disponibles.")
+excepciones.DatosInvalidosError: Solo hay 5 unidades disponibles.
+2026-11-16 17:35:26,762 | ERROR | Operación 9 fallida: Reserva de un servicio no disponible
+Traceback (most recent call last):
+  File "/mnt/data/Software_FJ/main.py", line 12, in ejecutar_operacion
+    resultado = funcion()
+  File "/mnt/data/Software_FJ/main.py", line 68, in servicio_no_disponible
+    return sistema.crear_reserva(
+           ~~~~~~~~~~~~~~~~~~~~~^
+        clientes_creados["laura"], asesoria, 1, tema="Automatización"
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/mnt/data/Software_FJ/gestor.py", line 40, in crear_reserva
+    reserva = Reserva(cliente, servicio, horas, **parametros)
+  File "/mnt/data/Software_FJ/reservas.py", line 15, in __init__
+    servicio.validar_disponibilidad()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/mnt/data/Software_FJ/servicios.py", line 29, in validar_disponibilidad
+    raise ServicioNoDisponibleError(f"El servicio '{self.nombre}' no está disponible.")
+excepciones.ServicioNoDisponibleError: El servicio 'Consultoría Python' no está disponible.
+2026-11-16 17:35:26,763 | INFO | Reserva creada: 8d3b79e8
+2026-11-16 17:35:26,763 | INFO | Reserva creada: f16b52ca
+2026-11-16 17:35:26,763 | ERROR | Operación 11 fallida: Intento de procesar reserva sin confirmar
+Traceback (most recent call last):
+  File "/mnt/data/Software_FJ/main.py", line 12, in ejecutar_operacion
+    resultado = funcion()
+  File "/mnt/data/Software_FJ/main.py", line 79, in procesamiento_incorrecto
+    return r.procesar()
+           ~~~~~~~~~~^^
+  File "/mnt/data/Software_FJ/reservas.py", line 38, in procesar
+    raise EstadoReservaError("La reserva debe estar confirmada antes de procesarse.")
+excepciones.EstadoReservaError: La reserva debe estar confirmada antes de procesarse.
+2026-11-16 17:35:44,452 | INFO | Cliente registrado: 10203040
+2026-11-16 17:35:44,452 | ERROR | Operación 2 fallida: Registro inválido de cliente
+Traceback (most recent call last):
+  File "/mnt/data/Software_FJ/main.py", line 12, in ejecutar_operacion
+    resultado = funcion()
+  File "/mnt/data/Software_FJ/main.py", line 39, in cliente_invalido
+    return Cliente("Li", "123", "correo-mal", "12")
+  File "/mnt/data/Software_FJ/clientes.py", line 9, in __init__
+    self.nombre = nombre
+    ^^^^^^^^^^^
+  File "/mnt/data/Software_FJ/clientes.py", line 21, in nombre
+    raise DatosInvalidosError("El nombre debe tener al menos 3 caracteres.")
+excepciones.DatosInvalidosError: El nombre debe tener al menos 3 caracteres.
+2026-11-16 17:35:44,454 | ERROR | Operación 3 fallida: Intento de registrar cliente duplicado
+Traceback (most recent call last):
+  File "/mnt/data/Software_FJ/main.py", line 12, in ejecutar_operacion
+    resultado = funcion()
+  File "/mnt/data/Software_FJ/main.py", line 43, in cliente_duplicado
+    sistema.registrar_cliente(c)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "/mnt/data/Software_FJ/gestor.py", line 29, in registrar_cliente
+    raise SoftwareFJError("Ya existe un cliente con ese documento.")
+excepciones.SoftwareFJError: Ya existe un cliente con ese documento.
+2026-11-16 17:35:44,454 | INFO | Servicio registrado: Sala Ejecutiva
+2026-11-16 17:35:44,455 | INFO | Servicio registrado: Proyector
+2026-11-16 17:35:44,455 | INFO | Servicio registrado: Consultoría Python
+2026-11-16 17:35:44,455 | ERROR | Operación 5 fallida: Creación de servicio con tarifa inválida
+Traceback (most recent call last):
+  File "/mnt/data/Software_FJ/main.py", line 12, in ejecutar_operacion
+    resultado = funcion()
+  File "/mnt/data/Software_FJ/main.py", line 52, in servicio_invalido
+    return ReservaSala("Sala pequeña", -100, 10)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/Software_FJ/servicios.py", line 51, in __init__
+    super().__init__(nombre, tarifa_hora, disponible)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/Software_FJ/servicios.py", line 10, in __init__
+    raise DatosInvalidosError("La tarifa debe ser un número mayor que cero.")
+excepciones.DatosInvalidosError: La tarifa debe ser un número mayor que cero.
+2026-11-16 17:35:44,456 | INFO | Reserva creada: 7d3c309a
+2026-11-16 17:35:44,456 | ERROR | Operación 7 fallida: Reserva de sala sin parámetro obligatorio
+Traceback (most recent call last):
+  File "/mnt/data/Software_FJ/main.py", line 12, in ejecutar_operacion
+    resultado = funcion()
+  File "/mnt/data/Software_FJ/main.py", line 61, in reserva_sin_parametros
+    return sistema.crear_reserva(clientes_creados["laura"], sala, 2)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/Software_FJ/gestor.py", line 40, in crear_reserva
+    reserva = Reserva(cliente, servicio, horas, **parametros)
+  File "/mnt/data/Software_FJ/reservas.py", line 16, in __init__
+    servicio.validar_parametros(**parametros)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/mnt/data/Software_FJ/servicios.py", line 59, in validar_parametros
+    raise DatosInvalidosError("Falta indicar la cantidad de personas.")
+excepciones.DatosInvalidosError: Falta indicar la cantidad de personas.
+2026-11-16 17:35:44,457 | ERROR | Operación 8 fallida: Alquiler de más equipos de los disponibles
+Traceback (most recent call last):
+  File "/mnt/data/Software_FJ/main.py", line 12, in ejecutar_operacion
+    resultado = funcion()
+  File "/mnt/data/Software_FJ/main.py", line 64, in equipo_excede_unidades
+    return sistema.crear_reserva(clientes_creados["laura"], equipo, 3, cantidad=9)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/Software_FJ/gestor.py", line 40, in crear_reserva
+    reserva = Reserva(cliente, servicio, horas, **parametros)
+  File "/mnt/data/Software_FJ/reservas.py", line 16, in __init__
+    servicio.validar_parametros(**parametros)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/mnt/data/Software_FJ/servicios.py", line 79, in validar_parametros
+    raise DatosInvalidosError(f"Solo hay {self.unidades} unidades disponibles.")
+excepciones.DatosInvalidosError: Solo hay 5 unidades disponibles.
+2026-11-16 17:35:44,458 | ERROR | Operación 9 fallida: Reserva de un servicio no disponible
+Traceback (most recent call last):
+  File "/mnt/data/Software_FJ/main.py", line 12, in ejecutar_operacion
+    resultado = funcion()
+  File "/mnt/data/Software_FJ/main.py", line 68, in servicio_no_disponible
+    return sistema.crear_reserva(
+           ~~~~~~~~~~~~~~~~~~~~~^
+        clientes_creados["laura"], asesoria, 1, tema="Automatización"
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/mnt/data/Software_FJ/gestor.py", line 40, in crear_reserva
+    reserva = Reserva(cliente, servicio, horas, **parametros)
+  File "/mnt/data/Software_FJ/reservas.py", line 15, in __init__
+    servicio.validar_disponibilidad()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/mnt/data/Software_FJ/servicios.py", line 29, in validar_disponibilidad
+    raise ServicioNoDisponibleError(f"El servicio '{self.nombre}' no está disponible.")
+excepciones.ServicioNoDisponibleError: El servicio 'Consultoría Python' no está disponible.
+2026-11-16 17:35:44,461 | INFO | Reserva creada: d3e95721
+2026-11-16 17:35:44,461 | INFO | Reserva creada: 65cb1f18
+2026-11-16 17:35:44,461 | ERROR | Operación 11 fallida: Intento de procesar reserva sin confirmar
+Traceback (most recent call last):
+  File "/mnt/data/Software_FJ/main.py", line 12, in ejecutar_operacion
+    resultado = funcion()
+  File "/mnt/data/Software_FJ/main.py", line 79, in procesamiento_incorrecto
+    return r.procesar()
+           ~~~~~~~~~~^^
+  File "/mnt/data/Software_FJ/reservas.py", line 38, in procesar
+    raise EstadoReservaError("La reserva debe estar confirmada antes de procesarse.")
+excepciones.EstadoReservaError: La reserva debe estar confirmada antes de procesarse.
