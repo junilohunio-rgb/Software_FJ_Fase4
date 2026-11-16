@@ -27,7 +27,7 @@ py main.py
 - `reservas.py`: creación, confirmación, cancelación y procesamiento.
 - `excepciones.py`: excepciones personalizadas.
 - `gestor.py`: listas internas y registro de eventos.
-- `main.py`: demostración de 11 operaciones, exitosas y fallidas.
+- `main.py`: demostración de 10 operaciones, exitosas y fallidas.
 - `logs/software_fj.log`: archivo generado automáticamente.
 
 ## Conceptos POO aplicados
